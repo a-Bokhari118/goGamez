@@ -3,12 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadGames } from '../actions/gamesActions';
 //components
 import Game from '../components/Game';
+import GameDetail from '../components/GameDetail';
 //styles
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence, AnimateSharedLayout } from 'framer-motion';
+
+import { useLocation } from 'react-router-dom';
 
 const Home = () => {
+  //current location
+  const location = useLocation();
   const dispatch = useDispatch();
+  const pathId = location.pathname.split('/')[2];
   const { popular, newGames, upComing } = useSelector((state) => state.games);
 
   useEffect(() => {
@@ -16,26 +22,31 @@ const Home = () => {
   }, [dispatch]);
   return (
     <GameList>
-      <h2>Upcoming Games</h2>
-      <Games>
-        {upComing.map((game) => (
-          <Game key={game.id} game={game} />
-        ))}
-      </Games>
+      <AnimateSharedLayout>
+        <AnimatePresence>
+          {pathId && <GameDetail pathId={pathId} />}
+        </AnimatePresence>
+        <h2>New Games</h2>
+        <Games>
+          {newGames.map((game) => (
+            <Game key={game.id} game={game} />
+          ))}
+        </Games>
 
-      <h2>Popular Games</h2>
-      <Games>
-        {popular.map((game) => (
-          <Game key={game.id} game={game} />
-        ))}
-      </Games>
+        <h2>Popular Games</h2>
+        <Games>
+          {popular.map((game) => (
+            <Game key={game.id} game={game} />
+          ))}
+        </Games>
 
-      <h2>New Games</h2>
-      <Games>
-        {newGames.map((game) => (
-          <Game key={game.id} game={game} />
-        ))}
-      </Games>
+        <h2>Upcoming Games</h2>
+        <Games>
+          {upComing.map((game) => (
+            <Game key={game.id} game={game} />
+          ))}
+        </Games>
+      </AnimateSharedLayout>
     </GameList>
   );
 };
