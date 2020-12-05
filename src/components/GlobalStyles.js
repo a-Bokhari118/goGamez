@@ -19,12 +19,13 @@ html{
 body{
     font-family: 'Libre Baskerville', serif;
     width: 100%;
-    background-color: #f2f2f2;
+    background: linear-gradient( 90deg,#1b1b1b,#1b1b1b  ) ;
 }
 
 h2{
     font-size: 3rem;
     font-family: 'Bebas Neue', cursive;
+    
     letter-spacing: 3px;
     font-weight: lighter;
 }
